@@ -1,56 +1,61 @@
 <div class="body">
-    <div id="editor-container">
+  <div id="editor-container">
       <div id="editor">
-        <h2 id="text-editor-name">Text Editor</h2>
-        <textarea #editor (keydown)="onKeydownTab($event)" (input)="updateSource()" class="editor"></textarea>
-        <div>
-          <button (click)="run()" id="run-button">Run</button>
-          <button (click)="resetTextEditor()" id="reset-button">Reset</button>
-        </div>
+          <h2 id="text-editor-name">Text Editor</h2>
+          <textarea #editor (keydown)="onKeydownTab($event)" (input)="updateSource()" class="editor"></textarea>
+          <div>
+              <button (click)="run()" id="run-button">Run</button>
+              <button (click)="resetTextEditor()" id="reset-button">Reset</button>
+          </div>
       </div>
       <div id="console-debugger">
-        <div id="console" (click)="toggleConsole()">
-          <h2>Console</h2>
-          <div id="content">
-            <p id="console-content" [innerHTML]="consoleContent"></p>
-          </div>
-          <div class="horizontal-container">
-            <p id="username">reckless:</p>
-            <p id="commandline-content"><input id="commandline" type="text" placeholder="" (keydown.enter)="onKeydown($event)"></p>
-          </div>
-        </div>
-        <div id="debugger" class="tabs-container">
-          <ul class="nav nav-tabs">
-            <li class="nav-item">
-              <a class="nav-link" [class.active]="activeTab === 'debugger-output'" (click)="switchTab('debugger-output')">Output</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" [class.active]="activeTab === 'debugger-log'" (click)="switchTab('debugger-log')">Log</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" [class.active]="activeTab === 'tab2-content'" (click)="switchTab('tab2-content')">Tab 2</a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div [ngSwitch]="activeTab">
-              <div *ngSwitchCase="'debugger-output'">
-                <h2>Debugger Output</h2>
-                <p [innerHTML]="debuggerContent"></p>
+          <div id="console" (click)="toggleConsole()">
+            <button (click)="toggleSidebar()" class="toggle-sidebar-btn"> Change Window </button>
+              <h2>Console</h2>
+              <div id="content">
+                  <p id="console-content" [innerHTML]="consoleContent"></p>
               </div>
-              <div *ngSwitchCase="'debugger-log'">
-                <h2>Debugger Log</h2>
-                <p [innerHTML]="debuggerContent"></p>
+              <div class="horizontal-container">
+                  <p id="username">reckless:</p>
+                  <p id="commandline-content"><input id="commandline" type="text" placeholder="" (keydown.enter)="onKeydown($event)"></p>
               </div>
-              <div *ngSwitchCase="'tab2-content'">
-                <h2>Tab 2 Content</h2>
-                <!-- Content for Tab 2 -->
-              </div>
-            </div>
           </div>
-        </div>
+          <div id="debugger" class="tabs-container">
+              <div class="sidebar" [class.open]="isSidebarOpen">
+                <button class="close-sidebar-btn" (click)="closeSidebar()">X</button>
+                  <ul>
+                      <li class="nav-item">
+                          <a class="nav-link" [class.active]="activeTab === 'debugger-output'" (click)="switchTab('debugger-output')">Output</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" [class.active]="activeTab === 'debugger-log'" (click)="switchTab('debugger-log')">Log</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" [class.active]="activeTab === 'tab2-content'" (click)="switchTab('tab2-content')">Tab 2</a>
+                      </li>
+                  </ul>
+              </div>
+              <div class="tab-content">
+                  <div [ngSwitch]="activeTab">
+                      <div *ngSwitchCase="'debugger-output'">
+                          <h2>Debugger Output</h2>
+                          <p [innerHTML]="debuggerContent"></p>
+                      </div>
+                      <div *ngSwitchCase="'debugger-log'">
+                          <h2>Debugger Log</h2>
+                          <p [innerHTML]="debuggerContent"></p>
+                      </div>
+                      <div *ngSwitchCase="'tab2-content'">
+                          <h2>Tab 2 Content</h2>
+                          <!-- Content for Tab 2 -->
+                      </div>
+                  </div>
+              </div>
+          </div>
       </div>
-    </div>
-    <footer>
-      <p>© Fugue. All rights reserved.</p>
-    </footer>
   </div>
+  <footer>
+      <p>© Fugue. All rights reserved.</p>
+  </footer>
+</div>
+
