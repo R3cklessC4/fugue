@@ -12,6 +12,7 @@ export class EditorPageComponent {
   consoleContent: string = '';
   debuggerContent: string = '';
   editorContent: string = '';
+  isSidebarOpen = false;
   
   ngOnInit() {
     this.fugue.fugueState.subscribe((state: any) => {
@@ -220,6 +221,14 @@ export class EditorPageComponent {
       default:
         this.debuggerContent = '';
     }
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  closeSidebar() {
+    this.isSidebarOpen = false;
   }
 
 
