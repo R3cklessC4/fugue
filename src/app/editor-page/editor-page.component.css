@@ -1,0 +1,168 @@
+.body {
+    margin: 0;
+    padding: 0;
+    font-family:monospace;
+    tab-size: 4;
+    white-space: break-spaces;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: black;
+    color: white;
+}
+
+#editor-container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+#code-editor {
+    flex: 1;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+#console-debugger {
+    flex: 1;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#console {
+    flex: 1;
+    padding: 10px;
+    overflow: auto;
+    border-bottom: 1px solid #ccc;
+}
+
+#console-content {
+    margin: 0;
+    padding: 0;
+}
+
+#debugger {
+    flex: 1;
+    padding: 10px;
+    overflow: auto;
+    border-top: 1px solid #ccc;
+}
+
+textarea {
+    width: 100%;
+    height: calc(100% - 20px); /* Adjust for padding */
+    padding: 10px;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    resize: none;
+    font-size: 14px;
+    line-height: 1.5;
+    background-color: black;
+    color: white;
+}
+
+button {
+    padding: 10px;
+    margin: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#run-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+}
+
+#reset-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+}
+
+#java-button {
+    background-color: darkgray;
+    color: white;
+    border: none;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: black;
+    color: white;
+}
+
+.horizontal-container {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    justify-content: flex-start;
+}
+
+.horizontal-container p {
+    margin: 0;
+    line-height: 1;
+}
+
+#text-editor-name {
+    margin-left: 10px;
+}
+
+#username {
+    margin-right: 2px;
+    display: inline-block;
+}
+
+#commandline-content {
+    display: inline-block;
+    flex: 1;
+}
+
+#commandline {
+    border: none;
+    outline: none;
+    display: inline-block;
+    width: 100%;
+    color:white;
+    background-color:#333;
+}
+
+h2 {
+    font-family: monospace;
+}
+
+.nav-tabs .nav-link {
+    color: white;
+
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #333;
+    border-color: #ccc #ccc black;
+}
+
+.tab-pane {
+    background-color: black;
+    color: white;
+    padding: 10px;
+}
+
+.DebuggerButtons {
+    border: 2px solid white;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.DebuggerButtons:hover {
+    background-color: white;
+    color: black;
+}
