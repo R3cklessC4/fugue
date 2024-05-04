@@ -44,17 +44,13 @@ footer {
 /* Keyframes for rotation */
 @keyframes continuousRotate {
     from {
-        transform: rotate(0deg);
+      transform: rotate(0deg);
     }
     to {
-        transform: rotate(360deg);
+      transform: rotate(360deg);
     }
-}
+  }
 
-.half-page-image:hover .full-width {
-    /* Apply the continuous rotation animation */
-    animation: continuousRotate .5s linear infinite;
-}
 html{
     background-color:black;
 }
