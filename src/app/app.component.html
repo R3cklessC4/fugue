@@ -24,12 +24,22 @@
           >Text Editor</a
         ></span
       >
-      <span class="word"
-        ><a routerLink="/tutorials"
-        routerLinkActive="active"
-        ariaCurrentWhenActive="page"
-        >Tutorials</a
-          ></span>
+      <span class="word">
+        <ul class="navigation hide">
+          <li>
+            <button>Tutorials</button>
+            <div class="dropdown">
+              <ul class="list-items-with-descriptions">
+                <div class="item-title">
+                  <h3>Title</h3>
+                  <p>Description</p>
+                </div>
+              </ul>
+            </div>
+          </li>
+          <!--<a routerLink="/tutorials" routerLinkActive="active" ariaCurrentWhenActive="page">Tutorials</a>-->
+        </ul>
+      </span>
       <span class="word"
         ><button class="btn btn-primary btn-block" (click)="loginWithRedirect()">
           Log in
