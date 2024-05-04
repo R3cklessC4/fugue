@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: red;
+    color: red;
+}
+
+header {
+    background-color: darkblue;
+    padding: 20px;
+    text-align: left; /* Align text to the left */
+    display: flex;
+    font-family:monospace;
+    align-items: center;
+    justify-content: space-between;
+    position: relative; /* Add relative positioning to the header */
+}
+
+h1 {
+    margin: 0;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+.header-text {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10%;
+}
+
+.word {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s, background-color 0.3s;
+    margin-right: 50px;
+}
+
+.word:hover {
+    background-color: darkblue;
+    position: relative;/* Add relative positioning to the word */
+    z-index: 1; /* Bring the word to the front to cover the space */
+}
+html{
+    background-color:dimgrey;
+}
+html, body {
+    height: 100%;
+    background-color: dimgrey;
+    color: white; /* Set text color to white */
+    font-family: Arial, sans-serif;
+}
