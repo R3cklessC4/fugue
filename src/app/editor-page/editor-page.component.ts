@@ -202,6 +202,27 @@ export class EditorPageComponent {
     this.consoleContent = '';
   }
 
+  activeTab: string = 'debugger-output';
+  
+  switchTab(tabId: string) {
+    console.log('Switching to tab:', tabId);
+    this.activeTab = tabId;
+  
+    // Update the debuggerContent based on the selected tab
+    switch (tabId) {
+      case 'debugger-output':
+        this.debuggerContent = 'Content for Debugger Output tab';
+        break;
+      case 'debugger-log':
+        this.debuggerContent = 'Content for Debugger Log tab';
+        break;
+      // Add cases for additional tabs
+      default:
+        this.debuggerContent = '';
+    }
+  }
+
+
   /* FOR TESTING ONLY: runs java at endpoint for testing only 
   async runJava() {
     const editorContent = this.editor.nativeElement.value;
