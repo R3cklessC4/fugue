@@ -1,25 +1,23 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, Event, Router } from '@angular/router';
+import { AuthService } from '@auth0/auth0-angular';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'fugue';
   imagePath: any;
   isLogin: boolean = false;
 
-  constructor(private router: Router){
-    router.events.subscribe((event: Event) => {
-      if(event instanceof NavigationEnd) {
-        this.isLogin = event.url === '/login';
-      }
+  constructor(public auth: AuthService, private router: Router){
+    this.router.events
+    .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+    .subscribe((event: NavigationEnd) => {
+      this.isLogin = event.url === '/login-page';
     });
-  }
-
-  loginWithRedirect() {
-    // this.auth.loginWithRedirect;
   }
 }
