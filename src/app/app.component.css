@@ -61,3 +61,133 @@ html, body {
     color: white; /* Set text color to white */
     font-family: Arial, sans-serif;
 }
+
+.navigation {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(
+        --background
+    );
+}
+
+.navigation > li {
+    display: flex;
+    position: relative;
+    cursor: pointer;
+    align-items: center;
+    height: 2.625rem;
+}
+
+.navigation > li > a {
+    color: var(--white);
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.navigation > li> button {
+    color: var(--white);
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    gap: 0.25rem;
+    opacity: 1;
+    align-items: center;
+    font-size: 0.875rem;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    background: none;
+    display: flex;
+    padding: 0.185rem 0;
+    position: relative;
+}
+
+.dropdown {
+    position: absolute;
+    top: 2.625rem;
+    min-width: 15rem;
+    border-radius: 0.5rem;
+    background: var(--white);
+    display: none;
+    flex-direction: column;
+    padding: 1rem;
+    box-shadow: 0 5px 30px rgba(27,31,35,0.1),
+    0 0 1px rgba(27,31,35,0.4),
+    0 1px 2px rgba(27,31,35,0.15);
+    z-index:2;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.99) translateY(-0.7rem);
+        transform-origin: top;
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);   
+    }
+}
+
+.dropdown h3 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.list-menu-items {
+    display: flex;
+    list-style-type: none;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.list-menu-items > li > a {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.875rem;
+    width: 100%;
+    color: var(--gray);
+    text-decoration: none;
+}
+
+.list-menu-items > li > a:hover {
+    color: var(--primary);
+}
+
+.list-menu-items-with-descriptions {
+    list-style-type: none;
+}
+
+.list-menu-items-with-descriptions li {
+    display: flex;
+    padding: 0.25rem;
+    gap: 1rem;
+    width: 100%;
+}
+
+.list-menu-items-with-descriptions li:hover {
+    color:var(--primary);
+}
+
+.item-title h3 {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.item-title p {
+    font-size: 0.75rem;
+}
+
+.navigation > li:hover .dropdown {
+    display: flex;
+    opacity: 1;
+}
+
