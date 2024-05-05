@@ -9,20 +9,16 @@ import { EditorPageComponent } from './editor-page/editor-page.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-
-import { AuthModule } from '@auth0/auth0-angular';
-import { environment as env} from '../environments/environment';
-import { LoginButtonComponent } from './login-button/login-button.component';
-import { LogoutButtonComponent } from './logout-button/logout-button.component';
-import { LoginPageComponent } from './login-page/login-page.component';
+import { RouterModule } from '@angular/router';
+import { OtpVerifyComponent } from './otp-verify/otp-verify.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomepageComponent,
     EditorPageComponent,
-    LoginButtonComponent,
-    LogoutButtonComponent,
+    OtpVerifyComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,9 +26,11 @@ import { LoginPageComponent } from './login-page/login-page.component';
     CommonModule, 
     HttpClientModule, 
     FormsModule,
-    AuthModule.forRoot(env.auth)
+    RouterModule.forRoot([])
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
