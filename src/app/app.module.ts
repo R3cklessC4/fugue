@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { OtpVerifyComponent } from './otp-verify/otp-verify.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { DocumentationComponent } from './documentation/documentation.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     HomepageComponent,
     EditorPageComponent,
     OtpVerifyComponent,
+    DocumentationComponent,
   ],
   imports: [
     BrowserModule,
