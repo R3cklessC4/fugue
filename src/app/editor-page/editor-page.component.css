@@ -289,3 +289,23 @@ h2 {
     margin-right: 10px;
   }
   
+/* width */
+::-webkit-scrollbar {
+    width: 15px;
+    padding: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent; 
+}
+   
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #0000ff; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #0000ff; 
+}

@@ -30,6 +30,7 @@ h1 {
 a {
     color: white;
     text-decoration: none;
+    font-size: 35px;
 }
 
 .header-text {
@@ -191,3 +192,23 @@ html, body {
     opacity: 1;
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f50000; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #ff0000; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ff0000; 
+  }
+  
