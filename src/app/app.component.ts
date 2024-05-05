@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -13,7 +12,7 @@ export class AppComponent {
   imagePath: any;
   isLogin: boolean = false;
 
-  constructor(public auth: AuthService, private router: Router){
+  constructor(private router: Router){
     this.router.events
     .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
     .subscribe((event: NavigationEnd) => {
