@@ -1,5 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FugueRuntimeService } from '../fugue-runtime.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { HostListener } from "@angular/core";
 
 @Component({
   selector: 'app-editor-page',
@@ -9,242 +11,86 @@ import { FugueRuntimeService } from '../fugue-runtime.service';
 
 export class EditorPageComponent {
   userString: string = 'reckless: ';
-  consoleContent: string = '';
-  debuggerContent: string = '';
   editorContent: string = '';
   isSidebarOpen = false;
   
+  programOutputHTML: string = '';
+  debuggerStateHTML: string = '';
+  debuggerControlHTML: string = '';
+  memoryViewHTML: string = '';
+  
+  topActiveTab: string = 'debugger-control';
+  bottomActiveTab: string = 'debugger-state';
+  
+  // NOTE: top panel = console and bottom panel = debugger
+  // because changing the ids causes shit to not display properly and idk where the ids are referenced
+  lastClickedTopOrBottom: boolean = true;
+  
+  setActiveTab(id: string) {
+    if (this.lastClickedTopOrBottom) this.topActiveTab = id;
+    else this.bottomActiveTab = id;
+  }
+  
+  console = console;
+  
   ngOnInit() {
-    this.fugue.fugueState.subscribe((state: any) => {
-      if (typeof(state) === 'string') {
-        /// update error message
-        this.debuggerContent = state;
+    this.fugue.fugueState.subscribe((state: string) => {
+      if (state.startsWith('ERROR: ')) {
+        const msg = "Could not compile program! (See output window for more information)"
+        this.programOutputHTML   = state;
+        this.debuggerStateHTML   = msg;
+        this.debuggerControlHTML = msg;
+        this.memoryViewHTML      = msg;
       } else {
-        // TODO: You guys have to make this look good and have all the stuff
-        const stateJson = JSON.parse(state);
-        this.debuggerContent = state;
+        const [dbg, out, con, mem, ...rest] = state.split('{{{___FUNKY_SEPERATOR___}}}');
+        this.programOutputHTML   = this.sanitizer.bypassSecurityTrustHtml(out) as string;
+        this.debuggerStateHTML   = this.sanitizer.bypassSecurityTrustHtml(dbg) as string;
+        this.debuggerControlHTML = this.sanitizer.bypassSecurityTrustHtml(con) as string;
+        this.memoryViewHTML      = this.sanitizer.bypassSecurityTrustHtml(mem) as string;
       }
     });
   }
+  
+  @HostListener("click", ["$event.target"])
+  onClick(targetElement: any) {
+    if (targetElement.tagName.toLowerCase() === "button") {
+      if (targetElement.dataset.ip !== undefined) {
+        this.fugue.stepProgramTo(targetElement.dataset.ip);
+      } else if (targetElement.dataset.id === 'step') {
+        this.fugue.stepProgram();
+      } else if (targetElement.dataset.id === 'reset') {
+        this.fugue.resetProgram();
+      }
+    }
+  }
 
-  constructor(private fugue: FugueRuntimeService) {}
+  constructor(private fugue: FugueRuntimeService, private sanitizer: DomSanitizer) {}
 
   /* Allows us to watch text editor field */
   @ViewChild('editor') editor!: ElementRef;
-
-  /* On enter, runs command on console */
-  onKeydown(event:Event):void {
-    if(event instanceof KeyboardEvent) {
-      if(event.key === 'Enter') {
-
-        console.log('Keydown event triggered');
-        const commandLineValue = (event.target as HTMLInputElement).value;
-        this.appendContent(this.userString + commandLineValue);
-
-        // Handle console command
-        this.handleCommand(commandLineValue);
-
-        // Resets command line
-        (event.target as HTMLInputElement).value = '';
-        this.toggleConsole();
-      }
-    }
-  }
   
-  // TODO: Clicking on the hyperlinks have to execute smth
-  private updateDebuggerContent() {
-    const fugueState = JSON.parse(JSON.stringify(this.fugue.fugueState));
-    let debuggerContentString = '';
-
-    for(const key in fugueState) {
-      if(Object.prototype.hasOwnProperty.call(fugueState, key)) {
-        const propertyValue = fugueState[key];
-        debuggerContentString += `<p class="DebuggerButtons"><a href="">${key}: ${propertyValue}</a></p>`;
-      }
-    }
-    this.debuggerContent = debuggerContentString;
-  }
-  
-  updateSource() {
-    const err = this.fugue.loadProgram(this.editor.nativeElement.value);
-    if (typeof err === 'string'){
-      if (err === '') {
-        this.updateDebuggerContent();
-      }
-      else   {
-        this.debuggerContent = err || '';
-      }     
-    }    
-    // const [ok, state] = this.fugue.loadProgram(this.editor.nativeElement.value);
-    // if (ok) this.updateDebuggerContent();
-    // else    this.debuggerContent = 'TODO: return error info from jai code instead of just logging';
-  }
+  updateSource() { this.fugue.loadProgram(this.editor.nativeElement.value); }
+  toggleSidebar() { this.isSidebarOpen = !this.isSidebarOpen; }
+  closeSidebar() { this.isSidebarOpen = false; }
 
   /* Prevents Tab from switching focus and appends the space to textarea */
   onKeydownTab(event:Event):void {
     if(event instanceof KeyboardEvent) {
     // console.log('Editor input event triggered');
     
+    console.log(this.bottomActiveTab);
     
       if(event.key === 'Tab') {
         console.log('Tab keydown event triggered');
-            event.preventDefault();
-            const cursorPos = this.editor.nativeElement.selectionStart;
-            const currentValue = this.editor.nativeElement.value;
-            const newValue = currentValue.slice(0, cursorPos) + '\t' + currentValue.slice(cursorPos);
-            this.editor.nativeElement.value = newValue;
-            this.editor.nativeElement.setSelectionRange(cursorPos + 1, cursorPos + 1);
+        event.preventDefault();
+        const cursorPos = this.editor.nativeElement.selectionStart;
+        const currentValue = this.editor.nativeElement.value;
+        const newValue = currentValue.slice(0, cursorPos) + '\t' + currentValue.slice(cursorPos);
+        this.editor.nativeElement.value = newValue;
+        this.editor.nativeElement.setSelectionRange(cursorPos + 1, cursorPos + 1);
       }
     }
   }
 
-  private appendContent(content: string): void {
-    this.consoleContent += content + '<br>';
-  }
-
-  /* Run Button */
-  run() {
-    this.appendContent(this.userString + 'run');
-    this.handleCommand('run');
-  }
-
-  /* Runs the code from Text Editor on console */
-  // TODO: i think this button should be deprecated and repl
-  private finalOutput: string | undefined;
-  runCode(): void {
-    if (this.fugue.fugueState !== undefined) {
-      this.appendContent(this.finalOutput as string);
-    }
-  }
   
-
-  /* Allows users to click anywhere on console to focus typing */
-  toggleConsole() {
-    setTimeout(()=> {
-      const input = document.getElementById("commandline");
-      if(input) {
-        input.focus();
-      }
-    });
-  }
-
-  resetTextEditor() {
-    this.editor.nativeElement.value = '';
-  }
-  
-  private lastCommand: string = '';
-  private handleCommand(command: string){
-    const commandArgs = command.split(' ');
-    if(commandArgs.length > 2){
-      this.appendContent('Too many arguments >:(');
-      return;
-    }
-    const cmd = commandArgs[0];
-    if (cmd !== '') this.lastCommand = command;
-    switch(cmd) {
-      case '':
-        if(commandArgs.length > 1) {
-          this.appendContent('Too many arguments >:(');
-          break;
-        }
-        
-        if (this.lastCommand !== '') {
-            this.handleCommand(this.lastCommand);
-            return;
-        }
-        
-        break;
-      case 'help':
-        if(commandArgs.length > 1) {
-          this.appendContent('Too many arguments >:(');
-          break;
-        }
-        this.showHelp();
-        break;
-      case 'clear':
-        if(commandArgs.length > 1) {
-          this.appendContent('Too many arguments >:(');
-          break;
-        }
-        this.clearConsole();
-        break;
-      case 'run':
-        if(commandArgs.length > 1) {
-          this.appendContent('Too many arguments >:(');
-          break;
-        }
-        this.runCode();
-        break;
-      case 'step':
-        this.fugue.stepProgram();
-        break;
-      case 'save':
-        const savedElements = this.editor.nativeElement.value;
-        if(savedElements.trim() !== '') {
-          const response = '';
-        }
-        break;
-      default:
-        this.appendContent('Unknown command: ' + command);
-    }
-  }
-
-  private showHelp(): void {
-    const helpText = `
-      Available commands:
-      run - Runs fugue code
-      help - Show this help message
-      clear - Clear the console
-    `;
-    this.appendContent(helpText);
-  }
-  
-  private clearConsole(): void {
-    this.consoleContent = '';
-  }
-
-  activeTab: string = 'debugger-output';
-  
-  switchTab(tabId: string) {
-    console.log('Switching to tab:', tabId);
-    this.activeTab = tabId;
-  
-    // Update the debuggerContent based on the selected tab
-    switch (tabId) {
-      case 'debugger-output':
-        this.debuggerContent = 'Content for Debugger Output tab';
-        break;
-      case 'debugger-log':
-        this.debuggerContent = 'Content for Debugger Log tab';
-        break;
-      // Add cases for additional tabs
-      default:
-        this.debuggerContent = '';
-    }
-  }
-
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
-  }
-
-  closeSidebar() {
-    this.isSidebarOpen = false;
-  }
-
-
-  /* FOR TESTING ONLY: runs java at endpoint for testing only 
-  async runJava() {
-    const editorContent = this.editor.nativeElement.value;
-
-    if (editorContent.trim() !== '') {
-      try {
-        const response: any = await this.javaService.runJavaCode(editorContent).toPromise();
-        console.log('Response:', response);
-        this.appendContent(this.userString + response);
-      } catch (error) {
-        console.error('Error executing Java code:', error);
-      }
-    }
-  }
-*/
 }

@@ -59,7 +59,8 @@ const imports = {
 };
 
 function updateFugueState() {
-  findExport('get_fugue_state')(jaiContext, returnSpace);
+  const gfs = findExport('get_fugue_state');
+  gfs(jaiContext, returnSpace);
   const str = toJsString(returnSpace);
   postMessage(['state', str]);
   // postMessage(['state', JSON.parse(str)]);
@@ -89,7 +90,21 @@ const work: any = {
     findExport('load')(jaiContext, jaiStr, returnSpace);
     const errorString = toJsString(returnSpace);
     if (errorString !== '') { postMessage(['error', errorString]); return; }
-    
+    updateFugueState();
+  },
+  step: () => {
+    if (!wasmLoaded) { postMessage(['error', 'Could not load Fugue environment']); return; }
+    findExport('step')(jaiContext);
+    updateFugueState();
+  },
+  stepTo: (ip: bigint) => {
+    if (!wasmLoaded) { postMessage(['error', 'Could not load Fugue environment']); return; }
+    findExport('step_to')(jaiContext, ip);
+    updateFugueState();
+  },
+  reset: () => {
+    if (!wasmLoaded) { postMessage(['error', 'Could not load Fugue environment']); return; }
+    findExport('reset_debugger')(jaiContext);
     updateFugueState();
   }
 };
@@ -98,10 +113,6 @@ addEventListener('message', (message) => {
   const args = message.data;
   const name = args.shift();
   work[name](...args);
-  // postMessage(work[name](...args));
-  // console.log('worker got', args);
-  // const response = `worker response to ${message.data}`;
-  // postMessage(response);
 });
 
 // internal helpers

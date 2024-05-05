@@ -19,7 +19,6 @@ export class FugueRuntimeService {
       
       const proc = (this as any)[name];
       if (name === 'state') {
-        console.log('state ', args[0]);
         this.stateSubject.next(args[0]);
       } else if (name === 'error') {
         this.stateSubject.next(args[0]);
@@ -31,7 +30,6 @@ export class FugueRuntimeService {
         // console.error('TODO: ', name);
       } else {
         proc(...args);
-        console.log('page got message:', name, args);
       }
     };
     this.worker.postMessage(['init']);
@@ -50,19 +48,9 @@ export class FugueRuntimeService {
   //   this.fugueState = JSON.parse(str);
   // }
   
-  loadProgram(program: string): void {
-    this.worker.postMessage(['load', program]);
-    
-    
-    // this.updateFugueState();
-    // return '';
-  }
-  
-  stepProgram(): void {
-    this.worker.postMessage(['step', 1]);
-    // this.findExport('reset_temporary_storage')(this.jaiContext);
-    // this.findExport('step')(this.jaiContext);
-    // this.updateFugueState();
-    // console.log(this.fugueState);
-  }
+  // This is so sad.......
+  loadProgram(program: string): void { this.worker.postMessage(['load', program]); }
+  stepProgram(): void { this.worker.postMessage(['step']); }
+  resetProgram(): void { this.worker.postMessage(['reset']); }
+  stepProgramTo(ip: bigint): void { this.worker.postMessage(['stepTo', ip]); }
 }

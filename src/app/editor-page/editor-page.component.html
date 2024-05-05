@@ -1,61 +1,76 @@
 <div class="body">
-  <div id="editor-container">
-      <div id="editor">
-          <h2 id="text-editor-name">Text Editor</h2>
-          <textarea #editor (keydown)="onKeydownTab($event)" (input)="updateSource()" class="editor"></textarea>
-          <div>
-              <button (click)="run()" id="run-button">Run</button>
-              <button (click)="resetTextEditor()" id="reset-button">Reset</button>
-          </div>
-      </div>
-      <div id="console-debugger">
-          <div id="console" (click)="toggleConsole()">
-            <button (click)="toggleSidebar()" class="toggle-sidebar-btn"> Change Window </button>
-              <h2>Console</h2>
-              <div id="content">
-                  <p id="console-content" [innerHTML]="consoleContent"></p>
-              </div>
-              <div class="horizontal-container">
-                  <p id="username">reckless:</p>
-                  <p id="commandline-content"><input id="commandline" type="text" placeholder="" (keydown.enter)="onKeydown($event)"></p>
-              </div>
-          </div>
-          <div id="debugger" class="tabs-container">
-              <div class="sidebar" [class.open]="isSidebarOpen">
-                <button class="close-sidebar-btn" (click)="closeSidebar()">X</button>
-                  <ul>
-                      <li class="nav-item">
-                          <a class="nav-link" [class.active]="activeTab === 'debugger-output'" (click)="switchTab('debugger-output')">Output</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" [class.active]="activeTab === 'debugger-log'" (click)="switchTab('debugger-log')">Log</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" [class.active]="activeTab === 'tab2-content'" (click)="switchTab('tab2-content')">Tab 2</a>
-                      </li>
-                  </ul>
-              </div>
-              <div class="tab-content">
-                  <div [ngSwitch]="activeTab">
-                      <div *ngSwitchCase="'debugger-output'">
-                          <h2>Debugger Output</h2>
-                          <p [innerHTML]="debuggerContent"></p>
-                      </div>
-                      <div *ngSwitchCase="'debugger-log'">
-                          <h2>Debugger Log</h2>
-                          <p [innerHTML]="debuggerContent"></p>
-                      </div>
-                      <div *ngSwitchCase="'tab2-content'">
-                          <h2>Tab 2 Content</h2>
-                          <!-- Content for Tab 2 -->
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-  <footer>
-      <p>© Fugue. All rights reserved.</p>
-  </footer>
+    <div id="editor-container">
+        <div id="editor">
+            <h2 id="text-editor-name">Text Editor</h2>
+            <textarea #editor (keydown)="onKeydownTab($event)" (input)="updateSource()" class="editor"></textarea>
+        </div>
+        <div id="console-debugger">
+            <div id="console">
+                <button (click)="toggleSidebar()" class="toggle-sidebar-btn"> Change Window </button>
+                <div class="tab-content" (click)="lastClickedTopOrBottom = true; console.log('top')">
+                    <div [ngSwitch]="topActiveTab">
+                        <div *ngSwitchCase="'program-output'">
+                            <h2>Output</h2>
+                            <p [innerHTML]="programOutputHTML"></p>
+                        </div>
+                        <div *ngSwitchCase="'debugger-state'">
+                            <h2>Debugger Log</h2>
+                            <p [innerHTML]="debuggerStateHTML"></p>
+                        </div>
+                        <div *ngSwitchCase="'debugger-control'">
+                            <h2>Debugger Control</h2>
+                            <p [innerHTML]="debuggerControlHTML"></p>
+                        </div>
+                        <div *ngSwitchCase="'memory-view'">
+                            <h2>Debugger Control</h2>
+                            <p [innerHTML]="memoryViewHTML"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="debugger" class="tabs-container">
+                <div class="sidebar" [class.open]="isSidebarOpen">
+                    <button class="close-sidebar-btn" (click)="closeSidebar()">X</button>
+                    <ul>
+                        <li class="nav-item">
+                            <a class="nav-link" [class.active]="(bottomActiveTab === 'program-output') || (topActiveTab === 'program-output')" (click)="setActiveTab('program-output')">Output</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [class.active]="(bottomActiveTab === 'debugger-output') || (topActiveTab === 'debugger-output')" (click)="setActiveTab('debugger-state')">Debugger State</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [class.active]="(bottomActiveTab === 'debugger-control') || (topActiveTab === 'debugger-control')" (click)="setActiveTab('debugger-control')">Debugger Control</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [class.active]="(bottomActiveTab === 'memory-view') || (topActiveTab === 'memory-view')" (click)="setActiveTab('memory-view')">Memory View</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content" (click)="lastClickedTopOrBottom = false; console.log('bottom')">
+                    <div [ngSwitch]="bottomActiveTab">
+                        <div *ngSwitchCase="'program-output'">
+                            <h2>Output</h2>
+                            <p [innerHTML]="programOutputHTML"></p>
+                        </div>
+                        <div *ngSwitchCase="'debugger-state'">
+                            <h2>Debugger Log</h2>
+                            <p [innerHTML]="debuggerStateHTML"></p>
+                        </div>
+                        <div *ngSwitchCase="'debugger-control'">
+                            <h2>Debugger Control</h2>
+                            <p [innerHTML]="debuggerControlHTML"></p>
+                        </div>
+                        <div *ngSwitchCase="'memory-view'">
+                            <h2>Debugger Control</h2>
+                            <p [innerHTML]="memoryViewHTML"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>© Fugue. All rights reserved.</p>
+    </footer>
 </div>
 
