@@ -249,9 +249,16 @@ h2 {
     color: white; /* White text on hover */
     border-color: white; /* White border on hover */
   }
-  
-  
-  
 
+  ::ng-deep .debugger-control-button {
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
   
-  
+  ::ng-deep .debugger-control-button:hover {
+    background-color: white;
+    color: black;
+  }
