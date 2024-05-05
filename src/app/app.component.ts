@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+/* app.component.ts */
+import { Component, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -18,5 +19,10 @@ export class AppComponent {
     .subscribe((event: NavigationEnd) => {
       this.isLogin = event.url === '/login-page';
     });
+  }
+
+  setEditorContent(content: string) {
+    console.log(content);
+    this.router.navigate(['/editor-page'], { queryParams: { content: content } });
   }
 }
