@@ -2,7 +2,12 @@
     <div id="editor-container">
         <div id="editor">
             <h2 id="text-editor-name">Text Editor</h2>
-            <textarea #editor (keydown)="onKeydownTab($event)" (input)="updateSource()" class="editor"></textarea>
+            <div *ngIf="showAutoComplete" class="autocomplete">
+                <ul>
+                  <li *ngFor="let option of autoCompleteOptions" (click)="onAutoCompleteSelect(option)">{{ option }}</li>
+                </ul>
+            </div>
+            <textarea #editor (keydown)="onKeydownTab($event)" (input)="updateSource()" class="editor">{{ editorContent }}</textarea>
         </div>
         <div id="console-debugger">
             <div id="console">
