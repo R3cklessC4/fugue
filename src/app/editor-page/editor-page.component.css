@@ -249,16 +249,43 @@ h2 {
     color: white; /* White text on hover */
     border-color: white; /* White border on hover */
   }
+  .toggle-sidebar-btn:hover,
+  .debugger-control-button:hover {
+    background-color: blue; /* Blue background on hover */
+    color: white; /* White text on hover */
+    border-color: white; /* White border on hover */
+  }
+  
+  ::ng-deep .debugger-control-button,
+  ::ng-deep .current-control-button {
+    width: 300px; /* Set a fixed width for all buttons */
+    border-radius: 0;
+    padding: 15px 20px; 
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    background-color: whitesmoke; 
+    color: blue; 
+    border: 2px solid blue; 
+    margin-right: 10px;
+  }
+  
+  
+  ::ng-deep .debugger-control-button:hover {
+    background-color: blue; 
+    border-color: white;
+    color: white;
+  }
 
-  ::ng-deep .debugger-control-button {
-    border-radius: 30px;
+  ::ng-deep .current-control-button {
+    border-radius: 0;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    background-color: blue; 
+    color: white; 
+    border: 2px solid white;
+    margin-right: 10px;
   }
   
-  ::ng-deep .debugger-control-button:hover {
-    background-color: white;
-    color: black;
-  }
