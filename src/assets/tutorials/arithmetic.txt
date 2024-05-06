@@ -1,0 +1,26 @@
+# Welcome to Fugue!
+# To get started we first need to talk about stacks and reverse hungarian notation (don't worry its not that bad).
+# This language is a bit funkier than your average programming language, and one of the main ways this manifests is in how
+# mathematical expressions are written
+
+# Most programming languages use "infix" expressions, meaning that if you want to add 3 to 2 you write "3 + 2".
+# Fugue uses "postfix" (tahts the hungarian stuff),    meaning that if you want to add 3 to 2 you write "3 2 +".
+
+# This is where the stacks come in, lets take a look at the above example and what the Fugue interpeter will do
+# when it encounters each of the symbols in "3 2 +"
+# 3 -> push 3 onto the "register stack"                             ==> stack is now [3]
+# 2 -> push 2 onto the "register stack"                             ==> stack is now [3, 2]
+# + -> consume the top two elements on the stack and push their sum ==> stack is now [5]
+
+
+# We will explain the register stack in more detail in the next tutorial, but for now just think of it as your local
+# variables you work with when doing math and stuff.
+
+# The main function will provide a you with a number at the top of your regiser stack and your task is to print:
+# Double that number plus 12
+# For example: if the task was to add two to the input number we would just have to write "2 +" because there is already a number
+# On the stack
+# Hint: you can consume and print the top of the stack with the puti word (i.e "3 puti" would print 3)
+def main
+    
+end

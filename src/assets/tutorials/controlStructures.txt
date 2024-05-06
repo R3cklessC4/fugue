@@ -1,0 +1,35 @@
+# Now that we have gone over the basic kinds of variables and how to manipulate them, time to get to the good stuff.
+# If you want a program to do anything usefull you need to have need access to two mechanism:
+# Decision: you need to be able to execute different code depending on the current state of the program
+# Repetition: you need the ability to run the same code multiple times (duh)
+
+# If you've done any programming this statement might be extremely obvious, but it is important to menttion nevertheless
+# because a programming language a way to do those two things is just a calculator
+
+# Fugue deals with decision in the same way most programming languages do, with if statements! The only difference
+# is the usual postfix shenanigans. And they come in two forms:
+# condition if codeThatRunsIfTrue end
+# condition if codeThatRunsIfTrue else codeThatRunsIfFalse end
+
+# The if construction consumes the top element of the stack (must be a boolean (i.e a result of some kind of comparison))
+# and runs the codition block if the value is true.
+
+# A little on type checking, the register stack state at the end of codeThatRunsIfTrue
+# must match the code after the end in the case without the else branch
+# And the register stack after codeThatRunsIfTrue must match the register stack
+# after codeThatRunsIfFalse if a else branch is present
+
+# Now we have our repetition construction, the while loop. This is the only looping structure the language has by default,
+# but there are secret features that we will cover later that can let you write your very own custom loop constructs.
+# Here is the while loop syntax:
+# while loopCondition do loopBody end
+
+# One important thing to note is that the state of the register stack immediately after the while word needs to match
+# The type stack right before the end word is encountered, this makes sense if you think about the fact that you go from the
+# end of the loop back to the condition body and things did not line up you could very easily trash your stack
+
+# You will be provided with a number on the top of the stack (n)
+# Your task is to print wether that number is even or odd, followed by n exlaimation points
+def main
+    
+end

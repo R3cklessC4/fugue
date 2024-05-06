@@ -1,0 +1,6 @@
+type(int)
+test(regs(3),  "18")
+test(regs(71), "154")
+test(regs(12), "60")
+test(regs(4),  "28")
+test(regs(34), "80")

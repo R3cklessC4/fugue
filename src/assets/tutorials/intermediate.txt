@@ -1,0 +1,10 @@
+def main
+    0 while dup 20 < do
+        0 while dup over(2) < do
+            "*" puts
+            1 +
+        end drop
+        "<br>" puts
+        1 +
+    end drop
+end

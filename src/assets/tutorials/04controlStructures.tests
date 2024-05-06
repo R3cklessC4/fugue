@@ -1,0 +1,6 @@
+type(int)
+test(regs(1),  "odd!")
+test(regs(2),  "even!!")
+test(regs(3),  "odd!!!")
+test(regs(12), "even!!!!!!!!!!!!")
+test(regs(33), "odd!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
