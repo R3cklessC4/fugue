@@ -1,7 +1,31 @@
-<div>
+<body>
     <h1>DOCUMENTATION</h1>
-    <p>Bullet</p>
+    <ul>
+        <li>Bullet</li>
+    </ul>
     <h2>How it works</h2>
-    <p>Web assembly</p>
+
+    <h2>Web assembly</h2>
+    <p>
+        WASM or Web assembly is a low level binary instruction format that is 
+        dsigned to be a portable target for compelation of high level laungauges.
+
+        Our programming lanagauge Fugue is complied into wasm. This involes transforming the source code into a binary format ('.wasm') which is compact 
+        and fast to transmit,parse, and execute. 
+
+        The WebAssembly module (.wasm file) is loaded by a web application through HTML/JavaScript. 
+        This file can be fetched from a server just like other assets such as images or scripts.
+
+        Once the module is loaded, it is instantiated in the browser. During instantiation, the WebAssembly code is compiled and optimized by the browser's JavaScript engine
+        into executable machine code.This process is much quicker than JavaScript interpretation because WebAssembly is already in a low-level, machine-friendly format.
+
+        Once instantiated and integrated, the WebAssembly code runs at speeds close to native machine code performance. This is especially beneficial for heavy computational 
+        tasks like image processing, games, or complex algorithms.
+
+        WebAssembly maintains a high level of security by executing code in a sandboxed environment. 
+        This means it has limited access to the system it's running on, much like JavaScript.
+
+
+    </p>
     <h2>Basic Syntax</h2>
-</div>
+</body>
