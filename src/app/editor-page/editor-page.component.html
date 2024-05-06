@@ -7,7 +7,7 @@
                   <li *ngFor="let option of autoCompleteOptions" (click)="onAutoCompleteSelect(option)">{{ option }}</li>
                 </ul>
             </div>
-            <textarea #editor (keydown)="onKeydownTab($event)" (input)="updateSource()" class="editor">{{ editorContent }}</textarea>
+            <textarea spellcheck="false" #editor (keydown)="onKeydownTab($event)" (input)="updateSource()" class="editor">{{ editorContent }}</textarea>
         </div>
         <div id="console-debugger">
             <div id="console">
