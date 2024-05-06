@@ -311,3 +311,26 @@ h2 {
 ::-webkit-scrollbar-thumb:hover {
     background: #0000ff; 
 }
+
+.autocomplete {
+    padding-left: 40px;
+}
+
+.autocomplete ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .autocomplete li {
+    padding: 5px;
+    cursor: pointer;
+    max-width: 475px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .autocomplete li:hover {
+    background-color: #f4f4f4;
+  }

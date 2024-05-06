@@ -13,6 +13,8 @@ export class AppComponent {
   imagePath: any;
   isLogin: boolean = false;
 
+  intermediate = 'def main 0 while dup 20 < do 0 while dup over(2) < do "*" puts 1 + end drop "<br>" puts 1 + end drop end';
+
   constructor(private router: Router){
     this.router.events
     .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
