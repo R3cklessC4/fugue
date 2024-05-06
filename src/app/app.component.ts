@@ -13,7 +13,8 @@ export class AppComponent {
   imagePath: any;
   isLogin: boolean = false;
 
-  intermediate = 'def main 0 while dup 20 < do 0 while dup over(2) < do "*" puts 1 + end drop "<br>" puts 1 + end drop end';
+  beginner = 'def main \n\t34 34 + puti \nend';
+  intermediate = 'def main \n\t0 while dup 20 < do \n\t\t0 while dup over(2) < do \n\t\t\t"*" puts \n\t\t\t1 + end drop \n\t\t"<br>" puts \n\t\t1 + \n\tend drop \nend';
 
   constructor(private router: Router){
     this.router.events
@@ -26,5 +27,13 @@ export class AppComponent {
   setEditorContent(content: string) {
     console.log(content);
     this.router.navigate(['/editor-page'], { queryParams: { content: content } });
+  }
+
+  setBeginner(){
+    this.setEditorContent(this.beginner);
+  }
+
+  setIntermediate(){
+    this.setEditorContent(this.intermediate);
   }
 }
